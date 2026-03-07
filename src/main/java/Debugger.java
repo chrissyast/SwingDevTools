@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
@@ -16,13 +17,11 @@ import static java.awt.event.MouseEvent.MOUSE_EXITED;
 
 public class Debugger {
 
-    //private static final List<Border> borders = Arrays.asList(RED_BORDER, GREEN_BORDER, YELLOW_BORDER, BLUE_BORDER);
-    private static final List<Color> colours = Arrays.asList(Color.RED, Color.GREEN, Color.YELLOW, Color.BLUE);
+    private static final List<Color> colours = Arrays.asList(Color.RED, Color.GREEN, Color.YELLOW, Color.BLUE, Color.MAGENTA, Color.ORANGE, Color.CYAN);
     private static final JWindow overlay = new JWindow();
-    //private static final JLabel overlayLabel = new JLabel();
     private static final Map<JComponent, Border> originalBorders = new HashMap<>();
-    private static final Map<JComponent, Color> assignedColours = new HashMap<>();
-    private static final Map<JComponent, JLabel> labels = new HashMap<>();
+    private static final Map<String, Color> assignedColours = new HashMap<>();
+    private static boolean isControlPressed = false;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
@@ -38,33 +37,37 @@ public class Debugger {
         panel.add(pane);
         frame.add(panel);
         frame.setVisible(true);
-        System.out.println("foo!");
 
         overlay.setBackground(new Color(0,0,0,0));
         overlay.pack();
-        //attachListeners(frame);
+        addListeners();
+    }
+
+    private static void addListeners() {
         Toolkit.getDefaultToolkit().addAWTEventListener(e -> {
             if (e.getID() == MOUSE_ENTERED) {
-                System.out.println("ye " + e.getSource());
                 handleMouseEntered(e);
             }
             if (e.getID() == MOUSE_EXITED) {
-                System.out.println("ey " + e.getSource());
                 handleMouseExit(e);
             }
         }, AWTEvent.MOUSE_EVENT_MASK);
+        Toolkit.getDefaultToolkit().addAWTEventListener(e -> {
+            if (((KeyEvent) e).getKeyCode() == KeyEvent.VK_CONTROL) {
+                isControlPressed = e.getID() == KeyEvent.KEY_PRESSED;
+            }
+        }, AWTEvent.KEY_EVENT_MASK);
     }
-
 
     private static String getComponentPath(JComponent comp) {
         String text = comp.getClass().getSimpleName();
-        if (comp.getClass().getPackageName().equals("dev.astles")) {
+        if (!comp.getClass().getPackageName().contains("javax.swing")) {
             text = "<span style='color: red'>" + text + "</span>";
         }
-        if (!assignedColours.containsKey(comp)) {
-            assignedColours.put(comp, colours.get(assignedColours.size() % 4));
+        if (!assignedColours.containsKey(comp.getClass().getSimpleName())) {
+            assignedColours.put(comp.getClass().getSimpleName(), colours.get(assignedColours.size() % colours.size()));
         }
-        Color borderColour = assignedColours.get(comp);
+        Color borderColour = assignedColours.get(comp.getClass().getSimpleName());
         String hex = String.format("#%02x%02x%02x", borderColour.getRed(), borderColour.getGreen(), borderColour.getBlue());
         text = text + "<font color='" + hex + "'>●</font>";
         if (comp.getParent() != null && comp.getParent() instanceof JComponent) {
@@ -74,7 +77,7 @@ public class Debugger {
     }
 
     private static void setComponentBorder(JComponent comp, boolean resetting) {
-        comp.setBorder(resetting ? originalBorders.get(comp) : BorderFactory.createLineBorder(assignedColours.get(comp), 3));
+        comp.setBorder(resetting || !isControlPressed ? originalBorders.get(comp) : BorderFactory.createLineBorder(assignedColours.get(comp.getClass().getSimpleName()), 3));
         if (comp.getParent() != null && comp.getParent() instanceof JComponent) {
             setComponentBorder((JComponent) comp.getParent(), resetting);
         }
@@ -87,8 +90,8 @@ public class Debugger {
         JComponent comp = (JComponent) e.getSource();
         Border originalBorder = comp.getBorder();
         originalBorders.put(comp, originalBorder);
-        if (!assignedColours.containsKey(comp)) {
-            assignedColours.put(comp, colours.get(assignedColours.size() % 4));
+        if (!assignedColours.containsKey(comp.getClass().getSimpleName())) {
+            assignedColours.put(comp.getClass().getSimpleName(), colours.get(assignedColours.size() % colours.size()));
         }
         String text = getComponentPath(comp);
         JLabel overlayLabel = new JLabel();
@@ -104,7 +107,7 @@ public class Debugger {
         Point p = MouseInfo.getPointerInfo().getLocation();
         setComponentBorder(comp, false);
         overlay.setLocation(p.x + 10, p.y + 10); // TODO
-        overlay.setVisible(true);
+        overlay.setVisible(isControlPressed);
     }
 
     private static void handleMouseExit(AWTEvent e) {
