@@ -1,0 +1,199 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 65536 bytes for Failed to commit area from 0x0000020d71730000 to 0x0000020d71740000 of length 65536.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_windows.cpp:3450), pid=33664, tid=19752
+#
+# JRE version:  (11.0.30+7) (build )
+# Java VM: OpenJDK 64-Bit Server VM (11.0.30+7-LTS, mixed mode, sharing, tiered, compressed oops, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Ddebugger.agent.enable.coroutines=true -Ddebugger.async.stack.trace.for.all.threads=true -Dkotlinx.coroutines.debug.enable.creation.stack.trace=false -Dkotlinx.coroutines.debug.enable.flows.stack.trace=true -Dkotlinx.coroutines.debug.enable.mutable.state.flows.stack.trace=true -agentlib:jdwp=transport=dt_socket,server=n,suspend=y,address=127.0.0.1:53241 -javaagent:C:\Users\chris\AppData\Local\JetBrains\IntelliJIdea2025.3\captureAgent\debugger-agent.jar=file:///C:/Users/chris/AppData/Local/Temp/capture12947179011253791261.props -Dfile.encoding=UTF-8 -Duser.country=GB -Duser.language=en -Duser.variant Debugger
+
+Host: Intel(R) Core(TM) i7-3770 CPU @ 3.40GHz, 8 cores, 31G,  Windows 10 , 64 bit Build 19041 (10.0.19041.5915)
+Time: Fri Mar  6 21:41:16 2026 GMT Standard Time elapsed time: 0.084881 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000020d56771000):  JavaThread "Unknown thread" [_thread_in_vm, id=19752, stack(0x000000a124300000,0x000000a124400000)]
+
+Stack: [0x000000a124300000,0x000000a124400000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x65984a]
+V  [jvm.dll+0x7eb8e8]
+V  [jvm.dll+0x7ecfd9]
+V  [jvm.dll+0x7ed6e3]
+V  [jvm.dll+0x26d045]
+V  [jvm.dll+0x656c19]
+V  [jvm.dll+0x64aa05]
+V  [jvm.dll+0x3342de]
+V  [jvm.dll+0x334162]
+V  [jvm.dll+0x338e38]
+V  [jvm.dll+0x37e22a]
+V  [jvm.dll+0x37dc82]
+V  [jvm.dll+0x30f138]
+V  [jvm.dll+0x310236]
+V  [jvm.dll+0x7c57bd]
+V  [jvm.dll+0x7c6f4f]
+V  [jvm.dll+0x38b5e9]
+V  [jvm.dll+0x7a6fa0]
+V  [jvm.dll+0x3fb367]
+V  [jvm.dll+0x3fd871]
+C  [jli.dll+0x5358]
+C  [ucrtbase.dll+0x21bb2]
+C  [KERNEL32.DLL+0x17374]
+C  [ntdll.dll+0x4cc91]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x0000020d545a6980, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+
+Other Threads:
+  0x0000020d5678b800 GCTaskThread "GC Thread#0" [stack: 0x000000a124400000,0x000000a124500000] [id=17572]
+  0x0000020d5680a800 ConcurrentGCThread "G1 Main Marker" [stack: 0x000000a124500000,0x000000a124600000] [id=29792]
+  0x0000020d5680c000 ConcurrentGCThread "G1 Conc#0" [stack: 0x000000a124600000,0x000000a124700000] [id=12356]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ff8b78201d7]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x0000020d5676bb00] Heap_lock - owner thread: 0x0000020d56771000
+
+Heap address: 0x0000000601c00000, size: 8164 MB, Compressed Oops mode: Non-zero based: 0x0000000601c00000
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (1 events):
+Event: 0.072 Loaded shared library C:\Users\chris\.jdks\ms-11.0.30\bin\zip.dll
+
+
+Dynamic libraries:
+0x00007ff7d97d0000 - 0x00007ff7d97de000 	C:\Users\chris\.jdks\ms-11.0.30\bin\java.exe
+0x00007ff8f45b0000 - 0x00007ff8f47a8000 	C:\Windows\SYSTEM32\ntdll.dll
+0x00007ff8f44a0000 - 0x00007ff8f4562000 	C:\Windows\System32\KERNEL32.DLL
+0x00007ff8f22d0000 - 0x00007ff8f25c6000 	C:\Windows\System32\KERNELBASE.dll
+0x00007ff8f20c0000 - 0x00007ff8f21c0000 	C:\Windows\System32\ucrtbase.dll
+0x00007ff8e37e0000 - 0x00007ff8e37f8000 	C:\Users\chris\.jdks\ms-11.0.30\bin\jli.dll
+0x00007ff8e39c0000 - 0x00007ff8e39de000 	C:\Users\chris\.jdks\ms-11.0.30\bin\VCRUNTIME140.dll
+0x00007ff8f2b60000 - 0x00007ff8f2d01000 	C:\Windows\System32\USER32.dll
+0x00007ff8f22a0000 - 0x00007ff8f22c2000 	C:\Windows\System32\win32u.dll
+0x00007ff8f3b10000 - 0x00007ff8f3b3b000 	C:\Windows\System32\GDI32.dll
+0x00007ff8f1ef0000 - 0x00007ff8f2009000 	C:\Windows\System32\gdi32full.dll
+0x00007ff8e4bd0000 - 0x00007ff8e4e6b000 	C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.6456_none_60b8a6cb71f64256\COMCTL32.dll
+0x00007ff8f1c40000 - 0x00007ff8f1cdd000 	C:\Windows\System32\msvcp_win.dll
+0x00007ff8f3250000 - 0x00007ff8f32ee000 	C:\Windows\System32\msvcrt.dll
+0x00007ff8f29d0000 - 0x00007ff8f29ff000 	C:\Windows\System32\IMM32.DLL
+0x00007ff8e3ae0000 - 0x00007ff8e3aec000 	C:\Users\chris\.jdks\ms-11.0.30\bin\vcruntime140_1.dll
+0x00007ff8d4890000 - 0x00007ff8d491d000 	C:\Users\chris\.jdks\ms-11.0.30\bin\msvcp140.dll
+0x00007ff8b7500000 - 0x00007ff8b80d6000 	C:\Users\chris\.jdks\ms-11.0.30\bin\server\jvm.dll
+0x00007ff8f2a00000 - 0x00007ff8f2ab1000 	C:\Windows\System32\ADVAPI32.dll
+0x00007ff8f2ac0000 - 0x00007ff8f2b5f000 	C:\Windows\System32\sechost.dll
+0x00007ff8f39f0000 - 0x00007ff8f3b10000 	C:\Windows\System32\RPCRT4.dll
+0x00007ff8f1d60000 - 0x00007ff8f1d87000 	C:\Windows\System32\bcrypt.dll
+0x00007ff8f3cc0000 - 0x00007ff8f3d2b000 	C:\Windows\System32\WS2_32.dll
+0x00007ff8e4f30000 - 0x00007ff8e4f57000 	C:\Windows\SYSTEM32\WINMM.dll
+0x00007ff8e6120000 - 0x00007ff8e612a000 	C:\Windows\SYSTEM32\VERSION.dll
+0x00007ff8efa90000 - 0x00007ff8efaa2000 	C:\Windows\SYSTEM32\kernel.appcore.dll
+0x00007ff8e3870000 - 0x00007ff8e3880000 	C:\Users\chris\.jdks\ms-11.0.30\bin\verify.dll
+0x00007ff8e5740000 - 0x00007ff8e5941000 	C:\Windows\SYSTEM32\DBGHELP.DLL
+0x00007ff8e2880000 - 0x00007ff8e28b4000 	C:\Windows\SYSTEM32\dbgcore.DLL
+0x00007ff8f2210000 - 0x00007ff8f2292000 	C:\Windows\System32\bcryptPrimitives.dll
+0x00007ff8e33a0000 - 0x00007ff8e33ca000 	C:\Users\chris\.jdks\ms-11.0.30\bin\java.dll
+0x00007ff8e3790000 - 0x00007ff8e379a000 	C:\Users\chris\.jdks\ms-11.0.30\bin\jimage.dll
+0x00007ff8db5e0000 - 0x00007ff8db619000 	C:\Users\chris\.jdks\ms-11.0.30\bin\jdwp.dll
+0x00007ff8e3780000 - 0x00007ff8e378f000 	C:\Users\chris\.jdks\ms-11.0.30\bin\instrument.dll
+0x00007ff8e3400000 - 0x00007ff8e3418000 	C:\Users\chris\.jdks\ms-11.0.30\bin\zip.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Users\chris\.jdks\ms-11.0.30\bin;C:\Windows\SYSTEM32;C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.6456_none_60b8a6cb71f64256;C:\Users\chris\.jdks\ms-11.0.30\bin\server
+
+VM Arguments:
+jvm_args: -Ddebugger.agent.enable.coroutines=true -Ddebugger.async.stack.trace.for.all.threads=true -Dkotlinx.coroutines.debug.enable.creation.stack.trace=false -Dkotlinx.coroutines.debug.enable.flows.stack.trace=true -Dkotlinx.coroutines.debug.enable.mutable.state.flows.stack.trace=true -agentlib:jdwp=transport=dt_socket,server=n,suspend=y,address=127.0.0.1:53241 -javaagent:C:\Users\chris\AppData\Local\JetBrains\IntelliJIdea2025.3\captureAgent\debugger-agent.jar=file:///C:/Users/chris/AppData/Local/Temp/capture12947179011253791261.props -Dfile.encoding=UTF-8 -Duser.country=GB -Duser.language=en -Duser.variant 
+java_command: Debugger
+java_class_path (initial): C:\Users\chris\IdeaProjects\SwingDebugger\build\classes\java\main;C:\Users\chris\IdeaProjects\SwingDebugger\build\resources\main
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 2                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 8                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 2097152                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 536870912                                 {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 8560574464                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 2097152                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5836300                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122910970                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122910970                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+     bool UseCompressedClassPointers               = true                                 {lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                                 {lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+JAVA_HOME=C:\Users\chris\.jdks\temurin-23.0.1
+PATH=C:\Python312\Scripts\;C:\Python312\;C:\Python310\Scripts\;C:\Python310\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\dotnet\;C:\Users\chris\.m2\wrapper\dists\apache-maven-3.8.6-bin\1ks0nkde5v1pk9vtc31i9d0lcd\apache-maven-3.8.6\bin;C:\Users\chris\.jdks\openjdk-18.0.2.1;C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin;C:\Users\chris\Downloads\aaru-5.3.2_windows_x64;C:\Program Files\nodejs\;C:\Program Files\Microsoft VS Code\bin;C:\Users\chris\Poppler\poppler-25.12.0\Library\bin;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\chris\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2022.1.4\bin;C:\Program Files\JetBrains\RubyMine 2022.3.2\bin;C:\Program Files\heroku\bin;C:\Users\chris\.fly\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Users\chris\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA 2024.3.1\bin;C:\Program Files\liquibase;C:\Users\chris\AppData\Roaming\npm;C:\Gradle\gradle-9.0.0\bin
+USERNAME=chris
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 58 Stepping 9, GenuineIntel
+TMP=C:\Users\chris\AppData\Local\Temp
+TEMP=C:\Users\chris\AppData\Local\Temp
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 10 , 64 bit Build 19041 (10.0.19041.5915)
+OS uptime: 6 days 6:22 hours
+Hyper-V role detected
+
+CPU:total 8 (initial active 8) (4 cores per cpu, 2 threads per core) family 6 model 58 stepping 9 microcode 0x21, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, aes, clmul, erms, ht, tsc, tscinvbit, tscinv
+
+Memory: 4k page, system-wide physical 32654M (4854M free)
+TotalPageFile size 40846M (AvailPageFile size 2M)
+current process WorkingSet (physical memory assigned to process): 10M, peak: 10M
+current process commit charge ("private bytes"): 578M, peak: 578M
+
+vm_info: OpenJDK 64-Bit Server VM (11.0.30+7-LTS) for windows-amd64 JRE (11.0.30+7-LTS), built on Jan 14 2026 18:06:18 by "MicrosoftCorporation" with unknown MS VC++:1943
+
+END.
