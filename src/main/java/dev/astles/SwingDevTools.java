@@ -102,7 +102,8 @@ public class SwingDevTools {
         if (!(e.getSource() instanceof JComponent)) {
             return;
         }
-        JComponent comp = (JComponent) e.getSource();
+        JComponent eventComponent = (JComponent) e.getSource();
+        JComponent comp = (JComponent) SwingUtilities.getDeepestComponentAt(eventComponent, ((MouseEvent) e).getX(), ((MouseEvent) e).getY());
         setComponentBorder(comp, true);
         overlay.setVisible(false);
     }
