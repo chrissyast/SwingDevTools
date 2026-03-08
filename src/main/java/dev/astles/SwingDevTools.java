@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -67,10 +68,11 @@ public class SwingDevTools {
     }
 
     private static void handleMouseEntered(AWTEvent e) {
-        if (!(e.getSource() instanceof JComponent)) {
+        if (!(e.getSource() instanceof JComponent) || !isControlPressed) {
             return;
         }
-        JComponent comp = (JComponent) e.getSource();
+        JComponent clickedComp = (JComponent) e.getSource();
+        JComponent comp = (JComponent) SwingUtilities.getDeepestComponentAt(clickedComp, ((MouseEvent) e).getX(), ((MouseEvent) e).getY());
         Border originalBorder = comp.getBorder();
         originalBorders.put(comp, originalBorder);
         if (!assignedColours.containsKey(comp.getClass().getSimpleName())) {
