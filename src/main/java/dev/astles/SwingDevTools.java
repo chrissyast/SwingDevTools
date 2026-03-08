@@ -103,8 +103,14 @@ public class SwingDevTools {
             return;
         }
         JComponent eventComponent = (JComponent) e.getSource();
-        JComponent comp = (JComponent) SwingUtilities.getDeepestComponentAt(eventComponent, ((MouseEvent) e).getX(), ((MouseEvent) e).getY());
-        setComponentBorder(comp, true);
+        Component comp = SwingUtilities.getDeepestComponentAt(eventComponent, ((MouseEvent) e).getX(), ((MouseEvent) e).getY());
+        if (comp == null) {
+            return;
+        }
+        while (!(comp instanceof JComponent)) {
+            comp = comp.getParent();
+        }
+        setComponentBorder((JComponent) comp, true);
         overlay.setVisible(false);
     }
 }
