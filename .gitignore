@@ -41,3 +41,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/src/main/java/Debugger.java
+/src/main/java/dev/astles/exclude/*
+hs_err_*
+/gradle.properties
