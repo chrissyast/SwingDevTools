@@ -61,7 +61,9 @@ public class SwingDevTools {
             boolean isSwing = comp.getClass().getPackageName().contains("javax.swing");
             int thickness = isSwing ? 1 : 3;
             Border border = comp.getBorder();
-            originalBorders.putIfAbsent(comp, border);
+            if (!originalBorders.containsKey(comp)) {
+                originalBorders.put(comp, border);
+            }
             comp.setBorder(resetting || !isControlPressed ? originalBorders.get(comp) : BorderFactory.createLineBorder(assignedColours.get(comp.getClass().getSimpleName()), thickness));
         } catch (IllegalArgumentException e) {
             // just carry on
@@ -78,7 +80,9 @@ public class SwingDevTools {
         JComponent eventComponent = (JComponent) e.getSource();
         JComponent comp = (JComponent) SwingUtilities.getDeepestComponentAt(eventComponent, ((MouseEvent) e).getX(), ((MouseEvent) e).getY());
         Border originalBorder = comp.getBorder();
-        originalBorders.putIfAbsent(comp, originalBorder);
+        if (!originalBorders.containsKey(comp)) {
+            originalBorders.put(comp, originalBorder);
+        }
         if (!assignedColours.containsKey(comp.getClass().getSimpleName())) {
             assignedColours.put(comp.getClass().getSimpleName(), colours.get(assignedColours.size() % colours.size()));
         }
