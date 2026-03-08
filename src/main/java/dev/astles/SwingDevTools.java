@@ -58,7 +58,9 @@ public class SwingDevTools {
 
     private static void setComponentBorder(JComponent comp, boolean resetting) {
         try {
-            comp.setBorder(resetting || !isControlPressed ? originalBorders.get(comp) : BorderFactory.createLineBorder(assignedColours.get(comp.getClass().getSimpleName()), 3));
+            boolean isSwing = comp.getClass().getPackageName().contains("javax.swing");
+            int thickness = isSwing ? 1 : 3;
+            comp.setBorder(resetting || !isControlPressed ? originalBorders.get(comp) : BorderFactory.createLineBorder(assignedColours.get(comp.getClass().getSimpleName()), thickness));
         } catch (IllegalArgumentException e) {
             // just carry on
         }
