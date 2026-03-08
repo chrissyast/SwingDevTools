@@ -23,10 +23,6 @@ public class Debugger {
         panel.add(pane);
         frame.add(panel);
         frame.setVisible(true);
-        JViewport port = new JViewport();
-        port.setView(panel);
-        port.setVisible(true);
-        frame.add(port);
         initialise();
     }
 
