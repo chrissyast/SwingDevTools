@@ -68,11 +68,11 @@ public class SwingDevTools {
     }
 
     private static void handleMouseEntered(AWTEvent e) {
-        if (!(e.getSource() instanceof JComponent) || !isControlPressed) {
+        if (!(e.getSource() instanceof JComponent)) {
             return;
         }
-        JComponent clickedComp = (JComponent) e.getSource();
-        JComponent comp = (JComponent) SwingUtilities.getDeepestComponentAt(clickedComp, ((MouseEvent) e).getX(), ((MouseEvent) e).getY());
+        JComponent eventComponent = (JComponent) e.getSource();
+        JComponent comp = (JComponent) SwingUtilities.getDeepestComponentAt(eventComponent, ((MouseEvent) e).getX(), ((MouseEvent) e).getY());
         Border originalBorder = comp.getBorder();
         originalBorders.put(comp, originalBorder);
         if (!assignedColours.containsKey(comp.getClass().getSimpleName())) {
