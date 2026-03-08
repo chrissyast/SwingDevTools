@@ -33,6 +33,17 @@ fun File.hash(algorithm: String): String {
     return digest.digest().joinToString("") { "%02x".format(it) }
 }
 
+tasks.register("publishAllToCentral") {
+    group = "publishing"
+    description = "Sign, zip, and publish all artifacts to Maven Central via NMCP"
+
+    dependsOn(
+        tasks.named("signMavenJavaPublication"),
+        tasks.named("nmcpZipAggregation"),
+        tasks.named("publishAggregationToCentralPortal")
+    )
+}
+
 val prepareMavenUpload by tasks.registering {
     group = "publishing"
     description = "Prepare Maven artifacts with signatures, checksums, folder structure, and zip"
