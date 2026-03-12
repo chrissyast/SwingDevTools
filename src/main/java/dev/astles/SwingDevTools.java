@@ -37,6 +37,17 @@ public class SwingDevTools {
                 isControlPressed = e.getID() == KeyEvent.KEY_PRESSED;
             }
         }, AWTEvent.KEY_EVENT_MASK);
+        Toolkit.getDefaultToolkit().addAWTEventListener(e -> {
+            if (e.getID() == FOCUS_LOST) {
+                clearAllBorders();
+                isControlPressed = false;
+            }}, AWTEvent.FOCUS_EVENT_MASK);
+    }
+
+    private static void clearAllBorders() {
+        for (Map.Entry<JComponent, Border> borderEntry : originalBorders.entrySet()) {
+            borderEntry.getKey().setBorder(borderEntry.getValue());
+        }
     }
 
     private static String getComponentPath(JComponent comp) {
@@ -56,7 +67,7 @@ public class SwingDevTools {
         return text;
     }
 
-    private static void setComponentBorder(JComponent comp, boolean resetting) {
+    private static void setComponentBorder(JComponent comp) {
         try {
             boolean isSwing = comp.getClass().getPackageName().contains("javax.swing");
             int thickness = isSwing ? 1 : 3;
@@ -64,12 +75,15 @@ public class SwingDevTools {
             if (!originalBorders.containsKey(comp)) {
                 originalBorders.put(comp, border);
             }
-            comp.setBorder(resetting || !isControlPressed ? originalBorders.get(comp) : BorderFactory.createLineBorder(assignedColours.get(comp.getClass().getSimpleName()), thickness));
+            if (!assignedColours.containsKey(comp.getClass().getSimpleName())) {
+                assignedColours.put(comp.getClass().getSimpleName(), colours.get(assignedColours.size() % colours.size()));
+            }
+            comp.setBorder(!isControlPressed ? originalBorders.get(comp) : BorderFactory.createLineBorder(assignedColours.get(comp.getClass().getSimpleName()), thickness));
         } catch (IllegalArgumentException e) {
             // just carry on
         }
         if (comp.getParent() != null && comp.getParent() instanceof JComponent) {
-            setComponentBorder((JComponent) comp.getParent(), resetting);
+            setComponentBorder((JComponent) comp.getParent());
         }
     }
 
@@ -79,13 +93,7 @@ public class SwingDevTools {
         }
         JComponent eventComponent = (JComponent) e.getSource();
         JComponent comp = (JComponent) SwingUtilities.getDeepestComponentAt(eventComponent, ((MouseEvent) e).getX(), ((MouseEvent) e).getY());
-        Border originalBorder = comp.getBorder();
-        if (!originalBorders.containsKey(comp)) {
-            originalBorders.put(comp, originalBorder);
-        }
-        if (!assignedColours.containsKey(comp.getClass().getSimpleName())) {
-            assignedColours.put(comp.getClass().getSimpleName(), colours.get(assignedColours.size() % colours.size()));
-        }
+
         String text = getComponentPath(comp);
         JLabel overlayLabel = new JLabel();
         overlayLabel.setOpaque(true);
@@ -98,12 +106,16 @@ public class SwingDevTools {
         overlay.pack();
 
         Point p = MouseInfo.getPointerInfo().getLocation();
-        setComponentBorder(comp, false);
+        setComponentBorder(comp);
         overlay.setLocation(p.x + 10, p.y + 10); // TODO
         overlay.setVisible(isControlPressed);
     }
 
     private static void handleMouseExit(AWTEvent e) {
+        if (!isControlPressed) {
+            clearAllBorders();
+            return;
+        }
         if (!(e.getSource() instanceof JComponent)) {
             return;
         }
@@ -115,7 +127,7 @@ public class SwingDevTools {
         while (!(comp instanceof JComponent)) {
             comp = comp.getParent();
         }
-        setComponentBorder((JComponent) comp, true);
+        setComponentBorder((JComponent) comp);
         overlay.setVisible(false);
     }
 }
