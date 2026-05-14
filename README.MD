@@ -1,3 +1,12 @@
+![Demo](img_1.png)
+
+## Features
+* Shows a full hierarchy of Swing Components at the given mouse position while Ctrl/Cmd is held down
+* Highlights extensions of the Swing Component (i.e. in the developer's own codebase) in red
+* Clicking the middle mouse button opens the file for the top non-Swing component in IntelliJ IDEA*
+
+\* Dependent on user's machine supporting `jetbrains://` protocol
+
 ## Example Main File For Testing
 
 ```java
@@ -23,7 +32,12 @@ public class Debugger {
         panel.add(pane);
         frame.add(panel);
         frame.setVisible(true);
-        initialise();
+        initialise(moduleName /* optional */); 
+        /*
+        moduleName should refer to the module as it appears in IntelliJ's project structure
+        if no name is supplied, highlighting functionality will still work but middle button
+        click to open IDE will not 
+        */
     }
 
 }
