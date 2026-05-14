@@ -119,6 +119,7 @@ public class SwingDevTools {
         overlayLabel.setText("<html><body>" + text + "</body></html>");
         overlay.getContentPane().removeAll();
         overlay.add(overlayLabel);
+        overlay.setAlwaysOnTop(true);
         overlay.pack();
 
         Point p = MouseInfo.getPointerInfo().getLocation();
@@ -151,6 +152,7 @@ public class SwingDevTools {
     private static void handleMiddleButton(AWTEvent e) {
         String componentPath = topNonSwingComponent.getClass().getName();
         componentPath = componentPath.replace(".", "%2f");
+        componentPath = componentPath.concat(".java");
         String uri = String.format("jetbrains://idea/navigate/reference?project=%s&path=%s", project, componentPath);
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             try {
